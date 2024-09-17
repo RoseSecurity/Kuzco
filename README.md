@@ -1,7 +1,7 @@
 # Kuzco
 
 <p align="center">
-<img width=100% height=100% src="./docs/img/kuzco-logo.png">
+<img width=90% height=80% src="./docs/img/kuzco-logo.png">
 </p>
 
 <p align="center">
