@@ -10,7 +10,7 @@
 
 ## Introduction
 
-Kuzco is an intelligent tool that analyzes your Terraform configurations and offers tailored recommendations to enhance efficiency, security, and performance. Simply put, Kuzco reviews your Terraform resources, compares them against the provider schema to detect unused parameters, and leverages AI to generate suggestions for a more secure, reliable, and optimized setup.
+Here's the **problem**: You spin up a Terraform resource, pull a basic configuration from the registry, and start wondering what other parameters should be enabled to make it more secure and efficient. Sure, you could use tools like TLint or TFSec, but `kuzco` saves you time by avoiding the need to dig through the Terraform registry and decipher unclear options. It leverages local LLMs to recommend what **should** be enabled and configured. Simply put, `kuzco` reviews your Terraform resources, compares them to the provider schema to detect unused parameters, and uses AI to suggest improvements for a more secure, reliable, and optimized setup.
 
 ## Demo
 
