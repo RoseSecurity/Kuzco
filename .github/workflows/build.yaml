@@ -1,0 +1,39 @@
+name: "Build CLI and Attach to GitHub Release"
+
+on:
+  release:
+    types: [published]
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: "Build CLI and Attach to GitHub Release"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Setup Go
+      - name: "Setup Go"
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: "go.mod"
+
+      # Print Go version
+      - run: go version
+
+      # Build and release
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: latest
+          args: release --parallelism 2 --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
