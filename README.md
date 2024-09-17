@@ -12,9 +12,6 @@
 
 Kuzco is an intelligent tool that analyzes your Terraform configurations and provides personalized recommendations to improve efficiency, security, and performance. By leveraging powerful machine learning models, Kuzco evaluates your infrastructure as code and suggests optimizations tailored to your specific use case.
 
-> [!CAUTION]
-> This tool is in active and early development. Opening issues, triaging bugs, feature requests, and code contributions are appreciated.
-
 ## Demo
 
 <p align="center">
@@ -22,6 +19,9 @@ Kuzco is an intelligent tool that analyzes your Terraform configurations and pro
 </p>
 
 ## Installation
+
+> [!NOTE]
+> To use `kuzco`, Ollama must be installed. You can do this by running `brew bundle install` or `brew install ollama`
 
 ### Go
 
@@ -64,3 +64,6 @@ Available Commands:
 Flags:
   -f, --file string    Path to the Terraform file (required)
 ```
+
+> [!CAUTION]
+> This tool is in active and early development. Opening issues, triaging bugs, feature requests, and code contributions are appreciated.
