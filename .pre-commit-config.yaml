@@ -1,0 +1,18 @@
+repos:
+  - repo: local
+    hooks:
+      - id: gofumpt
+        name: gofumpt
+        entry: bash -c 'make fmt'
+        language: system
+        types: ["go"]
+        files: main.go|cmd\/.*|internal\/.*
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: rebuild-docs
+        name: rebuild-docs
+        entry: bash -c 'make docs'
+        language: system
+        files: cmd\/.*
+        pass_filenames: false

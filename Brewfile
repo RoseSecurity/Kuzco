@@ -1,0 +1,2 @@
+brew "go"
+brew "gofumpt"

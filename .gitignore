@@ -19,7 +19,41 @@
 
 # Go workspace file
 go.work
-go.work.sum
 
-# env file
-.env
+# Compiled files
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+**/planfile
+**/*.planfile
+**/*.kubeconfig
+**/terraform.tfvars.json
+**/*.terraform.tfvars.json
+**/*.helmfile.vars.yaml
+**/.terraform.lock.hcl
+.vscode/
+
+# Module directory
+.terraform
+**/.idea
+**/*.iml
+
+**/.build-harness
+**/build-harness
+**/build
+**/dist
+**/.helmfile/
+.DS_Store
+/variant
+*.tar
+*.gz
+/bin
+
+# Nix
+.envrc
+.direnv/
+
+# Terramaid specific
+Terramaid.md
+
+dist/

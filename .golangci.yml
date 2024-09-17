@@ -1,0 +1,43 @@
+run:
+  deadline: 5m
+
+linters:
+  disable-all: true
+  enable:
+    #- bodyclose
+    # - deadcode ! deprecated since v1.49.0; replaced by 'unused'
+    #- depguard
+    #- dogsled
+    #- dupl
+    - errcheck
+    #- exhaustive
+    #- funlen
+    #- gochecknoinits
+    - goconst
+    - gocritic
+    #- gocyclo
+    - gofmt
+    - goimports
+    #- gomnd
+    #- goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    #- lll
+    - misspell
+    #- nakedret
+    #- noctx
+    - nolintlint
+    #- rowserrcheck
+    #- scopelint
+    - staticcheck
+    #- structcheck ! deprecated since v1.49.0; replaced by 'unused'
+    - stylecheck
+    #- typecheck
+    - unconvert
+    #- unparam
+    - unused
+    # - varcheck ! deprecated since v1.49.0; replaced by 'unused'
+    #- whitespace
+  fast: false
