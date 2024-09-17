@@ -10,7 +10,7 @@
 
 ## Introduction
 
-Kuzco is an intelligent tool that analyzes your Terraform configurations and provides personalized recommendations to improve efficiency, security, and performance. By leveraging powerful machine learning models, Kuzco evaluates your infrastructure as code and suggests optimizations tailored to your specific use case.
+Kuzco is an intelligent tool that analyzes your Terraform configurations and offers tailored recommendations to enhance efficiency, security, and performance. Simply put, Kuzco reviews your Terraform resources, compares them against the provider schema to detect unused parameters, and leverages AI to generate suggestions for a more secure, reliable, and optimized setup.
 
 ## Demo
 
