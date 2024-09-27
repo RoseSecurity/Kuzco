@@ -32,9 +32,21 @@ type LlamaResponse struct {
 }
 
 func GetRecommendations(resourceType string, unusedAttrs []string, model string, addr string) (string, error) {
-	prompt := fmt.Sprintf(
-		"For the Terraform resource type '%s', the following attributes are unused: %v. Suggest which attributes should be enabled, formatted as Terraform code with the recommended parameters, and include a concise comment for each explaining why it should be used. For each concise comment, format the output as a Terraform resource with each recommendation as a comment above the corresponding parameter.",
-		resourceType, unusedAttrs)
+	prompt := fmt.Sprintf(`Unused attributes for Terraform resource '%s': %v
+
+For each attribute that should be enabled:
+1. Recommend it as Terraform code
+2. Add a brief comment explaining its purpose
+3. Format as a resource block with comments above uncommented parameters
+
+Example output:
+resource "type" "name" {
+  # Enables feature X for improved security
+  attribute1 = value1
+  
+  # Optimizes performance by setting Y
+  attribute2 = value2
+}`, resourceType, unusedAttrs)
 
 	requestBody := LlamaRequest{
 		Model:  model,
@@ -81,10 +93,6 @@ func GetRecommendations(resourceType string, unusedAttrs []string, model string,
 	if err := json.NewDecoder(&rawResponse).Decode(&llamaResp); err != nil {
 		return "", fmt.Errorf("error decoding response: %v", err)
 	}
-
-	// Print recommendations with color formatting
-	fmt.Printf("%sRecommendations:%s\n", ColorBold+ColorYellow, ColorReset)
-	fmt.Println(llamaResp.Recommendations)
 
 	return llamaResp.Recommendations, nil
 }

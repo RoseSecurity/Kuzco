@@ -56,14 +56,6 @@ func findUnusedAttributes(usedAttrs map[string]string, possibleAttrs map[string]
 }
 
 func printRecommendations(resource Resource, usedAttrs map[string]string, recommendations string) {
-	fmt.Printf("\n# Kuzco-generated recommendations for attributes in %s \"%s\":\n", resource.Type, resource.Name)
-	fmt.Printf("resource \"%s\" \"%s\" {\n", resource.Type, resource.Name)
-
-	for attr, value := range usedAttrs {
-		fmt.Printf("  %s = \"%s\"\n", attr, value)
-	}
-
-	fmt.Printf("\n  # Suggested attributes to enable:\n")
-	fmt.Printf("%s", recommendations)
-	fmt.Printf("}\n\n")
+	// Print recommendations with color formatting
+	prettyPrint(recommendations)
 }
