@@ -12,6 +12,7 @@ import (
 var (
 	filePath string
 	model    string
+	addr     string
 )
 
 var rootCmd = &cobra.Command{
@@ -22,8 +23,10 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
+	rootCmd.AddCommand(versionCmd)
 	rootCmd.Flags().StringVarP(&filePath, "file", "f", "", "Path to the Terraform file (required)")
 	rootCmd.Flags().StringVarP(&model, "model", "m", "llama3.1", "LLM model to use for generating recommendations")
+	rootCmd.Flags().StringVarP(&addr, "address", "a", "http://localhost:11434", "IP Address and port to use for the LLM model (ex: http://localhost:11434)")
 }
 
 func runAnalyzer(cmd *cobra.Command, args []string) {
@@ -50,7 +53,7 @@ func runAnalyzer(cmd *cobra.Command, args []string) {
 	}
 
 	// Proceed with the main logic if all required flags are set
-	if err := internal.Run(filePath, model); err != nil {
+	if err := internal.Run(filePath, model, addr); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}

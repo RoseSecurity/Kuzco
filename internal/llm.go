@@ -31,10 +31,22 @@ type LlamaResponse struct {
 	Recommendations string `json:"response"`
 }
 
-func GetRecommendations(resourceType string, unusedAttrs []string, model string) (string, error) {
-	prompt := fmt.Sprintf(
-		"For the Terraform resource type '%s', the following attributes are unused: %v. Suggest which attributes should be enabled, in the native Terraform format, and explain briefly why they should be used.",
-		resourceType, unusedAttrs)
+func GetRecommendations(resourceType string, unusedAttrs []string, model string, addr string) (string, error) {
+	prompt := fmt.Sprintf(`Unused attributes for Terraform resource '%s': %v
+
+For each attribute that should be enabled:
+1. Recommend it as Terraform code
+2. Add a brief comment explaining its purpose
+3. Format as a resource block with comments above uncommented parameters
+
+Example output:
+resource "type" "name" {
+  # Enables feature X for improved security
+  attribute1 = value1
+  
+  # Optimizes performance by setting Y
+  attribute2 = value2
+}`, resourceType, unusedAttrs)
 
 	requestBody := LlamaRequest{
 		Model:  model,
@@ -59,7 +71,7 @@ func GetRecommendations(resourceType string, unusedAttrs []string, model string)
 	s.Start()
 
 	// Make the HTTP request
-	resp, err := http.Post("http://localhost:11434/api/generate", "application/json", bytes.NewBuffer(jsonData))
+	resp, err := http.Post(fmt.Sprintf("%s/api/generate", addr), "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		s.Stop()
 		fmt.Println()
@@ -69,7 +81,7 @@ func GetRecommendations(resourceType string, unusedAttrs []string, model string)
 
 	// Stop the spinner after the request is done
 	s.Stop()
-	fmt.Println() // Move to the next line
+	fmt.Println()
 
 	var rawResponse bytes.Buffer
 	_, err = rawResponse.ReadFrom(resp.Body)
@@ -81,10 +93,6 @@ func GetRecommendations(resourceType string, unusedAttrs []string, model string)
 	if err := json.NewDecoder(&rawResponse).Decode(&llamaResp); err != nil {
 		return "", fmt.Errorf("error decoding response: %v", err)
 	}
-
-	// Print recommendations with color formatting
-	fmt.Printf("%sRecommendations:%s\n", ColorBold+ColorYellow, ColorReset)
-	fmt.Println(llamaResp.Recommendations)
 
 	return llamaResp.Recommendations, nil
 }

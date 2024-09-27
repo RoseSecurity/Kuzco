@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func Run(filePath, model string) error {
+func Run(filePath, model string, addr string) error {
 	if !strings.HasSuffix(filePath, ".tf") {
 		return fmt.Errorf("the provided file must have a .tf extension")
 	}
@@ -22,17 +22,17 @@ func Run(filePath, model string) error {
 		return fmt.Errorf("error extracting provider schema: %v", err)
 	}
 
-	return printDiff(resources, providerSchema, model)
+	return printDiff(resources, providerSchema, model, addr)
 }
 
-func printDiff(resources []Resource, schema ProviderSchema, model string) error {
+func printDiff(resources []Resource, schema ProviderSchema, model string, addr string) error {
 	for _, resource := range resources {
 		if possibleAttrs, ok := schema.ResourceTypes[resource.Type]; ok {
 			usedAttrs := resource.Attributes
 			unusedAttrs := findUnusedAttributes(usedAttrs, possibleAttrs)
 
 			if len(unusedAttrs) > 0 {
-				recommendations, err := GetRecommendations(resource.Type, unusedAttrs, model)
+				recommendations, err := GetRecommendations(resource.Type, unusedAttrs, model, addr)
 				if err != nil {
 					return fmt.Errorf("error getting recommendations: %v", err)
 				}
@@ -56,14 +56,6 @@ func findUnusedAttributes(usedAttrs map[string]string, possibleAttrs map[string]
 }
 
 func printRecommendations(resource Resource, usedAttrs map[string]string, recommendations string) {
-	fmt.Printf("\n# Kuzco-generated recommendations for attributes in %s \"%s\":\n", resource.Type, resource.Name)
-	fmt.Printf("resource \"%s\" \"%s\" {\n", resource.Type, resource.Name)
-
-	for attr, value := range usedAttrs {
-		fmt.Printf("  %s = \"%s\"\n", attr, value)
-	}
-
-	fmt.Printf("\n  # Suggested attributes to enable:\n")
-	fmt.Printf("%s", recommendations)
-	fmt.Printf("}\n\n")
+	// Print recommendations with color formatting
+	prettyPrint(recommendations)
 }
