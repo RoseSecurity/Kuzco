@@ -31,9 +31,9 @@ type LlamaResponse struct {
 	Recommendations string `json:"response"`
 }
 
-func GetRecommendations(resourceType string, unusedAttrs []string, model string) (string, error) {
+func GetRecommendations(resourceType string, unusedAttrs []string, model string, addr string) (string, error) {
 	prompt := fmt.Sprintf(
-		"For the Terraform resource type '%s', the following attributes are unused: %v. Suggest which attributes should be enabled, in the native Terraform format, and explain briefly why they should be used.",
+		"For the Terraform resource type '%s', the following attributes are unused: %v. Suggest which attributes should be enabled, formatted as Terraform code with the recommended parameters, and include a concise comment for each explaining why it should be used. For each concise comment, format the output as a Terraform resource with each recommendation as a comment above the corresponding parameter.",
 		resourceType, unusedAttrs)
 
 	requestBody := LlamaRequest{
@@ -59,7 +59,7 @@ func GetRecommendations(resourceType string, unusedAttrs []string, model string)
 	s.Start()
 
 	// Make the HTTP request
-	resp, err := http.Post("http://localhost:11434/api/generate", "application/json", bytes.NewBuffer(jsonData))
+	resp, err := http.Post(fmt.Sprintf("%s/api/generate", addr), "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		s.Stop()
 		fmt.Println()
@@ -69,7 +69,7 @@ func GetRecommendations(resourceType string, unusedAttrs []string, model string)
 
 	// Stop the spinner after the request is done
 	s.Stop()
-	fmt.Println() // Move to the next line
+	fmt.Println()
 
 	var rawResponse bytes.Buffer
 	_, err = rawResponse.ReadFrom(resp.Body)
