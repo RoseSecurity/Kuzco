@@ -44,7 +44,7 @@ make build
 The following configuration options are available:
 
 ```sh
-❯ ./kuzco
+❯ kuzco
   _  __
  | |/ /  _   _   ____   ___    ___
  | ' /  | | | | |_  /  / __|  / _ \
