@@ -31,6 +31,22 @@ If you have a functional Go environment, you can install with:
 go install github.com/RoseSecurity/kuzco@latest
 ```
 
+### Apt
+
+To install packages, you can quickly setup the repository automatically:
+
+```sh
+curl -1sLf \
+  'https://dl.cloudsmith.io/public/rosesecurity/kuzco/setup.deb.sh' \
+  | sudo -E bash
+```
+
+Once the repository is configured, you can install with:
+
+```sh
+apt install kuzco=<VERSION>
+```
+
 ### Source
 
 ```sh
