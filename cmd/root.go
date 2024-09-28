@@ -52,6 +52,12 @@ func runAnalyzer(cmd *cobra.Command, args []string) {
 		return
 	}
 
+	// Validate that the specified model exists in Ollama
+	if err := internal.ValidateModel(model, addr); err != nil {
+		fmt.Fprintf(os.Stderr, "Model validation error: %v\n", err)
+		os.Exit(1)
+	}
+
 	// Proceed with the main logic if all required flags are set
 	if err := internal.Run(filePath, model, addr); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)

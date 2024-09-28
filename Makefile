@@ -16,7 +16,7 @@ build: ## Build Kuzco
 	env $(if $(GOOS),GOOS=$(GOOS)) $(if $(GOARCH),GOARCH=$(GOARCH)) $(GO) build -o build/$(BINARY_NAME) -ldflags "-X 'github.com/RoseSecurity/kuzco/cmd.Version=local'" main.go
 
 install: ## Install dependencies
-	$(GO) install ./...@latest
+	$(GO) install ./...
 
 clean: ## Clean up build artifacts
 	$(GO) clean
