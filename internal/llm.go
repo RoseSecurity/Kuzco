@@ -31,6 +31,16 @@ type LlamaResponse struct {
 	Recommendations string `json:"response"`
 }
 
+// Model represents the structure of a model in the response
+type Model struct {
+	Name string `json:"name"`
+}
+
+// ModelsResponse represents the structure of the response from /api/tags
+type ModelsResponse struct {
+	Models []Model `json:"models"`
+}
+
 func GetRecommendations(resourceType string, unusedAttrs []string, model string, addr string) (string, error) {
 	prompt := fmt.Sprintf(`Unused attributes for Terraform resource '%s': %v
 
@@ -95,4 +105,38 @@ resource "type" "name" {
 	}
 
 	return llamaResp.Recommendations, nil
+}
+
+// ValidateModel checks if the specified model exists in Ollama
+func ValidateModel(model, addr string) error {
+	// Get a list of available models from Ollama
+	resp, err := http.Get(fmt.Sprintf("%s/api/tags", addr))
+	if err != nil {
+		return fmt.Errorf("error fetching models from Ollama: %v", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("failed to retrieve models: status code %d", resp.StatusCode)
+	}
+
+	// Parse the response body into ModelsResponse
+	var modelsResp ModelsResponse
+	if err := json.NewDecoder(resp.Body).Decode(&modelsResp); err != nil {
+		return fmt.Errorf("error decoding models response: %v", err)
+	}
+
+	// Check if the requested model is in the list of models
+	for _, availableModel := range modelsResp.Models {
+		if availableModel.Name == model {
+			return nil
+		}
+	}
+
+	// If model is not found, return an error and list available models
+	var availableModelNames []string
+	for _, availableModel := range modelsResp.Models {
+		availableModelNames = append(availableModelNames, availableModel.Name)
+	}
+	return fmt.Errorf("model '%s' not found. Available models: %v", model, availableModelNames)
 }
