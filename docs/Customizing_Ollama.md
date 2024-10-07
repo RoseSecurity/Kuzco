@@ -1,4 +1,4 @@
-# Getting Started with Ollama and Kuzco
+# Customizing Ollama for Tailored Responses
 
 ## Overview
 
