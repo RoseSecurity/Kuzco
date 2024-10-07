@@ -21,7 +21,7 @@ Here's the **problem**: You spin up a Terraform resource, pull a basic configura
 ## Installation
 
 > [!NOTE]
-> To use `kuzco`, Ollama must be installed. You can do this by running `brew bundle install` or `brew install ollama`
+> To use `kuzco`, Ollama must be installed. You can do this by running `brew bundle install` or `brew install ollama`. For more information on customizing Ollama models for tailored Kuzco responses, check out [Customizing Ollama](./docs/Customizing_Ollama.md)
 
 ### Go
 
