@@ -17,7 +17,9 @@ func prettyPrint(markdownContent string) {
 		Background(lipgloss.Color("#282A36")).
 		Padding(1, 2).
 		BorderStyle(lipgloss.NormalBorder()).
-		BorderForeground(lipgloss.Color("#FF79C6"))
+		BorderForeground(lipgloss.Color("#FF79C6")).
+		Align(lipgloss.Center).
+		Width(75)
 
 	// Create a style for recommendations
 	commentStyle := lipgloss.NewStyle().
@@ -25,7 +27,7 @@ func prettyPrint(markdownContent string) {
 		Italic(true).
 		Margin(1, 2)
 
-	header := headerStyle.Render("# Kuzco Recommendations")
+	header := headerStyle.Render("Kuzco Recommendations")
 
 	renderer, err := glamour.NewTermRenderer(glamour.WithAutoStyle())
 	if err != nil {

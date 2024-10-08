@@ -69,8 +69,8 @@ resource "type" "name" {
 		return "", fmt.Errorf("error marshaling request: %v", err)
 	}
 
-	// Initialize the spinner with a custom message
-	spinnerText := "Yzma’s got nothing on this! Fetching those Terraform recommendations now!"
+	// Initialize the spinner
+	spinnerText := "Pull the lever, Kronk!"
 	s := spinner.New(spinner.CharSets[14], 100*time.Millisecond)
 	s.Color("magenta")
 	s.Writer = colorable.NewColorableStdout() // Ensure colors are supported on Windows
