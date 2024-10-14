@@ -81,10 +81,10 @@ Available Commands:
 
 Flags:
   -a, --address string   IP Address and port to use for the LLM model (ex: http://localhost:11434) (default "http://localhost:11434")
-  -f, --file string      Path to the Terraform file (required)
+  -f, --file string      Path to the Terraform and OpenTofu file (required)
   -h, --help             help for kuzco
-  -m, --model string     LLM model to use for generating recommendations (default "llama3.1")
+  -m, --model string     LLM model to use for generating recommendations (default "llama3.2")
+  -t, --tool terraform   Specifies the configuration tooling for configurations. Valid values include: terraform and `opentofu` (default "terraform")
 
 Use "kuzco [command] --help" for more information about a command.
 ```
-

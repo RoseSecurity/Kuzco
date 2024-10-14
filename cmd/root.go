@@ -61,7 +61,7 @@ func runAnalyzer(cmd *cobra.Command, args []string) {
 	}
 
 	// Proceed with the main logic if all required flags are set
-	if err := internal.Run(filePath, model, addr); err != nil {
+	if err := internal.Run(filePath, tool, model, addr); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
