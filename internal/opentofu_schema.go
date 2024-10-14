@@ -7,32 +7,27 @@ import (
 	"os/exec"
 )
 
-type ProviderSchema struct {
-	ResourceTypes map[string]map[string]interface{}
-}
-
-func ExtractProviderSchema(rootDir string) (ProviderSchema, error) {
+func ExtractOpenTofuProviderSchema(rootDir string) (ProviderSchema, error) {
 	schema := ProviderSchema{
 		ResourceTypes: make(map[string]map[string]interface{}),
 	}
 
-	// Run terraform init first
-	initCmd := exec.Command("terraform", "init")
+	initCmd := exec.Command("tofu", "init")
 	initCmd.Dir = rootDir
 	var initStderr bytes.Buffer
 	initCmd.Stderr = &initStderr
 	if err := initCmd.Run(); err != nil {
-		return schema, fmt.Errorf("error running terraform init: %v\nStderr: %s", err, initStderr.String())
+		return schema, fmt.Errorf("error running tofu init: %v\nStderr: %s", err, initStderr.String())
 	}
 
-	// Now run terraform providers schema -json
-	cmd := exec.Command("terraform", "providers", "schema", "-json")
+	// Now run tofu providers schema -json
+	cmd := exec.Command("tofu", "providers", "schema", "-json")
 	cmd.Dir = rootDir
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	output, err := cmd.Output()
 	if err != nil {
-		return schema, fmt.Errorf("error running terraform providers schema -json: %v\nStderr: %s", err, stderr.String())
+		return schema, fmt.Errorf("error running tofu providers schema -json: %v\nStderr: %s", err, stderr.String())
 	}
 
 	var providerData map[string]interface{}
