@@ -17,15 +17,15 @@ var (
 
 var rootCmd = &cobra.Command{
 	Use:   "kuzco",
-	Short: "Intelligently analyze your Terraform configurations",
-	Long:  `Intelligently analyze your Terraform configurations to receive personalized recommendations for boosting efficiency, security, and performance.`,
+	Short: "Intelligently analyze your Terraform and OpenTofu configurations",
+	Long:  `Intelligently analyze your Terraform and OpenTofu configurations to receive personalized recommendations for boosting efficiency, security, and performance.`,
 	Run:   runAnalyzer,
 }
 
 func init() {
 	rootCmd.AddCommand(versionCmd)
-	rootCmd.Flags().StringVarP(&filePath, "file", "f", "", "Path to the Terraform file (required)")
-	rootCmd.Flags().StringVarP(&model, "model", "m", "llama3.1", "LLM model to use for generating recommendations")
+	rootCmd.Flags().StringVarP(&filePath, "file", "f", "", "Path to the Terraform and OpenTofu file (required)")
+	rootCmd.Flags().StringVarP(&model, "model", "m", "llama3.2", "LLM model to use for generating recommendations")
 	rootCmd.Flags().StringVarP(&addr, "address", "a", "http://localhost:11434", "IP Address and port to use for the LLM model (ex: http://localhost:11434)")
 }
 

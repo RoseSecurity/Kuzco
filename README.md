@@ -5,12 +5,12 @@
 </p>
 
 <p align="center">
-  <em>Enhance your Terraform configurations with intelligent analysis powered by local LLMs</em>
+  <em>Enhance your Terraform and OpenTofu configurations with intelligent analysis powered by local LLMs</em>
 </p>
 
 ## Introduction
 
-Here's the **problem**: You spin up a Terraform resource, pull a basic configuration from the registry, and start wondering what other parameters should be enabled to make it more secure and efficient. Sure, you could use tools like TLint or TFSec, but `kuzco` saves you time by avoiding the need to dig through the Terraform registry and decipher unclear options. It leverages local LLMs to recommend what **should** be enabled and configured. Simply put, `kuzco` reviews your Terraform resources, compares them to the provider schema to detect unused parameters, and uses AI to suggest improvements for a more secure, reliable, and optimized setup.
+Here's the **problem**: You spin up a Terraform or OpenTofu resource, pull a basic configuration from the registry, and start wondering what other parameters should be enabled to make it more secure and efficient. Sure, you could use tools like TLint or TFSec, but `kuzco` saves you time by avoiding the need to dig through the Terraform registry and decipher unclear options. It leverages local LLMs to recommend what **should** be enabled and configured. Simply put, `kuzco` reviews your Terraform and OpenTofu resources, compares them to the provider schema to detect unused parameters, and uses AI to suggest improvements for a more secure, reliable, and optimized setup.
 
 ## Demo
 
@@ -68,7 +68,7 @@ The following configuration options are available:
  |_|\_\  \__,_| /___|  \___|  \___/
 
 
-Intelligently analyze your Terraform configurations to receive personalized recommendations for boosting efficiency, security, and performance.
+Intelligently analyze your Terraform and OpenTofu configurations to receive personalized recommendations for boosting efficiency, security, and performance.
 
 Usage:
   kuzco [flags]
