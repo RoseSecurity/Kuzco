@@ -13,7 +13,7 @@ type Resource struct {
 	Attributes map[string]string
 }
 
-func ParseTerraformFile(file string) ([]Resource, error) {
+func ParseConfigurationFile(file string) ([]Resource, error) {
 	var resources []Resource
 	parser := hclparse.NewParser()
 
