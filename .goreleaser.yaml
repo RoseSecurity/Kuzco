@@ -16,6 +16,24 @@ builds:
       - windows
       - darwin
 
+nfpms:
+  - id: deb
+    formats:
+      - apk
+      - rpm
+      - deb
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Arch }}"
+    maintainer: RoseSecurity <rosesecurityresearch@proton.me>
+    description: |-
+      Kuzco reviews your Terraform and OpenTofu resources, compares them to the provider schema to detect unused parameters, and uses AI to suggest improvements
+    dependencies:
+      - bash
+    contents:
+      - src: ./dist/{{ .ProjectName }}_linux_{{ .Arch }}
+        dst: /usr/local/bin/{{ .ProjectName }}
+    homepage: "https://github.com/RoseSecurity/kuzco"
+    license: Apache 2.0
+
 archives:
   - format: tar.gz
     name_template: >-
