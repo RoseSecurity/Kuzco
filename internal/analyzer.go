@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func Run(filePath, tool, model, addr string) error {
+func Run(filePath, tool, model, prompt, addr string) error {
 	if !(strings.HasSuffix(filePath, ".tf") || strings.HasSuffix(filePath, ".tofu")) {
 		return fmt.Errorf("the provided file must have a .tf or .tofu extension")
 	}
@@ -34,14 +34,14 @@ func Run(filePath, tool, model, addr string) error {
 		return fmt.Errorf("unsupported tool: %s. Supported tools are 'terraform' and 'opentofu'", tool)
 	}
 
-	if err := printDiff(resources, providerSchema, model, addr); err != nil {
+	if err := printDiff(resources, providerSchema, model, prompt, addr); err != nil {
 		return fmt.Errorf("error printing differences: %v", err)
 	}
 
 	return nil
 }
 
-func printDiff(resources []Resource, schema ProviderSchema, model, addr string) error {
+func printDiff(resources []Resource, schema ProviderSchema, model, prompt, addr string) error {
 	for _, resource := range resources {
 		if possibleAttrs, ok := schema.ResourceTypes[resource.Type]; ok {
 			usedAttrs := resource.Attributes
@@ -49,7 +49,7 @@ func printDiff(resources []Resource, schema ProviderSchema, model, addr string) 
 
 			if len(unusedAttrs) > 0 {
 				// Get recommendations based on unused attributes
-				recommendations, err := GetRecommendations(resource.Type, unusedAttrs, model, addr)
+				recommendations, err := GetRecommendations(resource.Type, unusedAttrs, model, prompt, addr)
 				if err != nil {
 					return fmt.Errorf("error getting recommendations for resource %s: %v", resource.Name, err)
 				}
