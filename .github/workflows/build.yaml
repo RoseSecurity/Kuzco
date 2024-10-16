@@ -37,3 +37,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      - name: Get Debian package name
+        id: deb_package
+        run: echo "PACKAGE=$(find dist/ -name '*.deb')" >> $GITHUB_ENV
+
+      # Push the Debian package to Cloudsmith
+      - name: Push Debian package to Cloudsmith
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "deb"
+          owner: "rosesecurity"
+          repo: "kuzco"
+          distro: "any-distro"
+          version: "any-version"
+          file: ${{ env.PACKAGE }}
+
