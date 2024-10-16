@@ -39,7 +39,7 @@ jobs:
 
       - name: Get Debian package name
         id: deb_package
-        run: echo "PACKAGE=$(find dist/ -name '*.deb')" >> $GITHUB_ENV
+        run: echo "PACKAGE=$(find dist/ -name '*.deb' | head -n 1)" >> $GITHUB_ENV
 
       # Push the Debian package to Cloudsmith
       - name: Push Debian package to Cloudsmith
