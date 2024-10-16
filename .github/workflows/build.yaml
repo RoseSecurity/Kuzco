@@ -52,6 +52,6 @@ jobs:
           owner: "rosesecurity"
           repo: "kuzco"
           distro: "any-distro"
-          version: "any-version"
+          release: "any-version"
           file: ${{ env.PACKAGE }}
 
