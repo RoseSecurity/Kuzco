@@ -27,7 +27,7 @@ nfpms:
     dependencies:
       - bash
     contents:
-      - src: ./dist/{{ .ProjectName }}_linux_{{ .Arch }}_v1
+      - src: ./dist/{{ .ProjectName }}_linux_{{ .Arch }}
         dst: /usr/local/bin/{{ .ProjectName }}
     homepage: "https://github.com/RoseSecurity/kuzco"
     license: Apache 2.0
