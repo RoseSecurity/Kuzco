@@ -37,12 +37,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - name: Get Debian package name
+      - name: Get Debian Package Names
         id: deb_package
-        run: echo "PACKAGE=$(find dist/ -name '*.deb' | head -n 1)" >> $GITHUB_ENV
+        run: |
+          echo "ARM_PACKAGE=$(find dist/ -name '*arm64.deb' | head -n 1)" >> $GITHUB_ENV
+          echo "AMD_PACKAGE=$(find dist/ -name '*amd64.deb' | head -n 1)" >> $GITHUB_ENV
 
       # Push the Debian package to Cloudsmith
-      - name: Push Debian package to Cloudsmith
+      - name: Push Debian ARM package to Cloudsmith
         id: push
         uses: cloudsmith-io/action@master
         with:
@@ -53,5 +55,18 @@ jobs:
           repo: "kuzco"
           distro: "any-distro"
           release: "any-version"
-          file: ${{ env.PACKAGE }}
+          file: ${{ env.ARM_PACKAGE }}
+
+      - name: Push Debian AMD package to Cloudsmith
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "deb"
+          owner: "rosesecurity"
+          repo: "kuzco"
+          distro: "any-distro"
+          release: "any-version"
+          file: ${{ env.AMD_PACKAGE }}
 
