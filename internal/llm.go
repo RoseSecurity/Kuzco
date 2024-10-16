@@ -13,20 +13,19 @@ import (
 
 // ANSI color codes
 const (
-	ColorReset     = "\033[0m"
-	ColorGreen     = "\033[32m"
-	ColorYellow    = "\033[33m"
-	ColorRed       = "\033[31m"
-	ColorBold      = "\033[1m"
-	ColorUnderline = "\033[4m"
+	ColorReset = "\033[0m"
+	ColorGreen = "\033[32m"
+	ColorBold  = "\033[1m"
 )
 
+// LlamaRequest represents a request to the Llama API
 type LlamaRequest struct {
 	Model  string `json:"model"`
 	Prompt string `json:"prompt"`
 	Stream bool   `json:"stream"`
 }
 
+// LlamaResponse represents a response from the Llama API
 type LlamaResponse struct {
 	Recommendations string `json:"response"`
 }
@@ -41,8 +40,11 @@ type ModelsResponse struct {
 	Models []Model `json:"models"`
 }
 
-func GetRecommendations(resourceType string, unusedAttrs []string, model string, addr string) (string, error) {
-	prompt := fmt.Sprintf(`Unused attributes for Terraform resource '%s': %v
+// GetRecommendations generates recommendations based on unused attributes and a model.
+func GetRecommendations(resourceType string, unusedAttrs []string, model string, prompt string, addr string) (string, error) {
+	var formattedPrompt string
+	if prompt != "" {
+		formattedPrompt = fmt.Sprintf(`Unused attributes for Terraform resource '%s': %v
 
 For each attribute that should be enabled:
 1. Recommend it as Terraform code
@@ -57,10 +59,24 @@ resource "type" "name" {
   # Optimizes performance by setting Y
   attribute2 = value2
 }`, resourceType, unusedAttrs)
+	} else {
+		formattedPrompt = fmt.Sprintf(`Unused attributes for Terraform resource '%s': %v
+
+'%s'
+
+Example output:
+resource "type" "name" {
+  # Enables feature X for improved security
+  attribute1 = value1
+  
+  # Optimizes performance by setting Y
+  attribute2 = value2
+}`, resourceType, unusedAttrs, prompt)
+	}
 
 	requestBody := LlamaRequest{
 		Model:  model,
-		Prompt: prompt,
+		Prompt: formattedPrompt,
 		Stream: false,
 	}
 
@@ -69,15 +85,12 @@ resource "type" "name" {
 		return "", fmt.Errorf("error marshaling request: %v", err)
 	}
 
-	// Initialize the spinner
-	spinnerText := "Pull the lever, Kronk!"
+	// Initialize and start the spinner
 	s := spinner.New(spinner.CharSets[14], 100*time.Millisecond)
 	s.Color("magenta")
 	s.Writer = colorable.NewColorableStdout() // Ensure colors are supported on Windows
-	s.Suffix = " " + spinnerText
-
-	// Start the spinner and print the message
-	fmt.Printf("%s%s%s ", ColorBold+ColorGreen, spinnerText, ColorReset)
+	s.Suffix = " Pull the lever, Kronk!"
+	fmt.Printf("%s%s%s ", ColorBold+ColorGreen, s.Suffix, ColorReset)
 	s.Start()
 
 	// Make the HTTP request
@@ -93,14 +106,9 @@ resource "type" "name" {
 	s.Stop()
 	fmt.Println()
 
-	var rawResponse bytes.Buffer
-	_, err = rawResponse.ReadFrom(resp.Body)
-	if err != nil {
-		return "", fmt.Errorf("error reading response: %v", err)
-	}
-
+	// Read and decode the response
 	var llamaResp LlamaResponse
-	if err := json.NewDecoder(&rawResponse).Decode(&llamaResp); err != nil {
+	if err := json.NewDecoder(resp.Body).Decode(&llamaResp); err != nil {
 		return "", fmt.Errorf("error decoding response: %v", err)
 	}
 
@@ -133,7 +141,7 @@ func ValidateModel(model, addr string) error {
 		}
 	}
 
-	// If model is not found, return an error and list available models
+	// If the model is not found, return an error and list available models
 	var availableModelNames []string
 	for _, availableModel := range modelsResp.Models {
 		availableModelNames = append(availableModelNames, availableModel.Name)

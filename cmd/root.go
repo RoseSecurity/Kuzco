@@ -13,6 +13,7 @@ var (
 	filePath string
 	tool     string
 	model    string
+	prompt   string
 	addr     string
 )
 
@@ -28,6 +29,7 @@ func init() {
 	rootCmd.Flags().StringVarP(&filePath, "file", "f", "", "Path to the Terraform and OpenTofu file (required)")
 	rootCmd.Flags().StringVarP(&tool, "tool", "t", "terraform", "Specifies the configuration tooling for configurations. Valid values include: `terraform` and `opentofu`")
 	rootCmd.Flags().StringVarP(&model, "model", "m", "llama3.2", "LLM model to use for generating recommendations")
+	rootCmd.Flags().StringVarP(&prompt, "prompt", "p", "", "User prompt for guiding the response format of the LLM model")
 	rootCmd.Flags().StringVarP(&addr, "address", "a", "http://localhost:11434", "IP Address and port to use for the LLM model (ex: http://localhost:11434)")
 }
 
@@ -61,7 +63,7 @@ func runAnalyzer(cmd *cobra.Command, args []string) {
 	}
 
 	// Proceed with the main logic if all required flags are set
-	if err := internal.Run(filePath, tool, model, addr); err != nil {
+	if err := internal.Run(filePath, tool, model, prompt, addr); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
