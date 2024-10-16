@@ -45,7 +45,7 @@ jobs:
 
       # Push the Debian package to Cloudsmith
       - name: Push Debian ARM package to Cloudsmith
-        id: push
+        id: push_arm
         uses: cloudsmith-io/action@master
         with:
           api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
@@ -58,7 +58,7 @@ jobs:
           file: ${{ env.ARM_PACKAGE }}
 
       - name: Push Debian AMD package to Cloudsmith
-        id: push
+        id: push_amd
         uses: cloudsmith-io/action@master
         with:
           api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
