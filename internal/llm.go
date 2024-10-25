@@ -9,6 +9,8 @@ import (
 
 	"github.com/briandowns/spinner"
 	"github.com/mattn/go-colorable"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 // ANSI color codes
@@ -41,10 +43,11 @@ type ModelsResponse struct {
 }
 
 // GetRecommendations generates recommendations based on unused attributes and a model.
-func GetRecommendations(resourceType string, unusedAttrs []string, model string, prompt string, addr string) (string, error) {
+func GetRecommendations(resourceType string, unusedAttrs []string, model string, tool string, prompt string, addr string) (string, error) {
+	tool = cases.Title(language.English, cases.NoLower).String(tool)
 	var formattedPrompt string
 	if prompt != "" {
-		formattedPrompt = fmt.Sprintf(`Unused attributes for Terraform resource '%s': %v
+		formattedPrompt = fmt.Sprintf(`Unused attributes for '%s' resource '%s': %v
 
 For each attribute that should be enabled:
 1. Recommend it as Terraform code
@@ -58,9 +61,9 @@ resource "type" "name" {
   
   # Optimizes performance by setting Y
   attribute2 = value2
-}`, resourceType, unusedAttrs)
+}`, tool, resourceType, unusedAttrs)
 	} else {
-		formattedPrompt = fmt.Sprintf(`Unused attributes for Terraform resource '%s': %v
+		formattedPrompt = fmt.Sprintf(`Unused attributes for '%s' resource '%s': %v
 
 '%s'
 
@@ -71,7 +74,7 @@ resource "type" "name" {
   
   # Optimizes performance by setting Y
   attribute2 = value2
-}`, resourceType, unusedAttrs, prompt)
+}`, tool, resourceType, unusedAttrs, prompt)
 	}
 
 	requestBody := LlamaRequest{

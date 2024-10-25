@@ -11,7 +11,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var Version = "0.2.0"
+// Placeholder for builds
+var Version = "1.0.0"
 
 type Release struct {
 	TagName string `json:"tag_name"`
@@ -28,7 +29,7 @@ var versionCmd = &cobra.Command{
 		if err == nil && latestReleaseTag != "" {
 			latestRelease := strings.TrimPrefix(latestReleaseTag, "v")
 			currentRelease := strings.TrimPrefix(Version, "v")
-			if latestRelease != currentRelease {
+			if latestRelease > currentRelease {
 				updateTerramaid(latestRelease)
 			}
 		}
