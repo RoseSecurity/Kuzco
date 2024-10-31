@@ -3,7 +3,7 @@ module github.com/RoseSecurity/kuzco
 go 1.23.1
 
 require (
-	github.com/alecthomas/chroma v0.10.0
+	github.com/alecthomas/chroma/v2 v2.14.0
 	github.com/arsham/figurine v1.3.0
 	github.com/briandowns/spinner v1.23.1
 	github.com/charmbracelet/glamour v0.8.0
@@ -17,7 +17,6 @@ require (
 
 require (
 	github.com/agext/levenshtein v1.2.1 // indirect
-	github.com/alecthomas/chroma/v2 v2.14.0 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/arsham/rainbow v1.2.1 // indirect
