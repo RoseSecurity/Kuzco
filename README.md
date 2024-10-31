@@ -86,7 +86,7 @@ Flags:
   -h, --help             help for kuzco
   -m, --model string     LLM model to use for generating recommendations (default "llama3.2")
   -p, --prompt string    User prompt for guiding the response format of the LLM model
-  -t, --tool terraform   Specifies the configuration tooling for configurations. Valid values include: terraform and `opentofu` (default "terraform")
+  -t, --tool terraform   Specifies the configuration tooling for configurations. Valid values include: terraform and opentofu (default "terraform")
 ```
 
 ## Contributing
