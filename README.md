@@ -61,11 +61,12 @@ The following configuration options are available:
 
 ```sh
 ❯ kuzco
-  _  __
- | |/ /  _   _   ____   ___    ___
- | ' /  | | | | |_  /  / __|  / _ \
- | . \  | |_| |  / /  | (__  | (_) |
- |_|\_\  \__,_| /___|  \___|  \___/
+
+██   ██ ██    ██ ███████  ██████  ██████
+██  ██  ██    ██    ███  ██      ██    ██
+█████   ██    ██   ███   ██      ██    ██
+██  ██  ██    ██  ███    ██      ██    ██
+██   ██  ██████  ███████  ██████  ██████
 
 
 Intelligently analyze your Terraform and OpenTofu configurations to receive personalized recommendations for boosting efficiency, security, and performance.

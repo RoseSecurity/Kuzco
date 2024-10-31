@@ -5,7 +5,8 @@ import (
 	"os"
 
 	"github.com/RoseSecurity/kuzco/internal"
-	"github.com/mbndr/figlet4go"
+	tuiUtils "github.com/RoseSecurity/kuzco/internal/tui/utils"
+	u "github.com/RoseSecurity/kuzco/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -34,24 +35,15 @@ func init() {
 }
 
 func runAnalyzer(cmd *cobra.Command, args []string) {
+	var err error
+
 	// Check if the required flag is set
 	if filePath == "" {
-		ascii := figlet4go.NewAsciiRender()
-		options := figlet4go.NewRenderOptions()
-		color, err := figlet4go.NewTrueColorFromHexString("FF00FF")
+		fmt.Println()
+		err = tuiUtils.PrintStyledText("KUZCO")
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error creating color: %v\n", err)
-			os.Exit(1)
+			u.LogErrorAndExit(err)
 		}
-		options.FontColor = []figlet4go.Color{
-			color, // Magenta
-		}
-		banner, err := ascii.Render("Kuzco")
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error generating ASCII banner: %v\n", err)
-			os.Exit(1)
-		}
-		fmt.Println(banner)
 		cmd.Help() // Print help to explain the required flags
 		return
 	}
