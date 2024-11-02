@@ -9,7 +9,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func prettyPrint(markdownContent string) {
+func PrettyPrint(markdownContent string) {
 	// Create a style for headers
 	headerStyle := lipgloss.NewStyle().
 		Bold(true).

@@ -53,7 +53,7 @@ func printDiff(resources []Resource, schema ProviderSchema, model, tool, prompt,
 				if err != nil {
 					return fmt.Errorf("error getting recommendations for resource %s: %v", resource.Name, err)
 				}
-				prettyPrint(recommendations)
+				PrettyPrint(recommendations)
 			} else {
 				fmt.Printf("Resource: %s (Type: %s) - All attributes are used.\n\n", resource.Name, resource.Type)
 			}
