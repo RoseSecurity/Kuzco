@@ -69,7 +69,7 @@ The following configuration options are available:
 ██   ██  ██████  ███████  ██████  ██████
 
 
-Intelligently analyze your Terraform and OpenTofu configurations to receive personalized recommendations for boosting efficiency, security, and performance.
+Intelligently analyze your Terraform and OpenTofu configurations to receive personalized recommendations and fixes for boosting efficiency, security, and performance.
 
 Usage:
   kuzco [flags]
@@ -77,16 +77,15 @@ Usage:
 
 Available Commands:
   completion  Generate the autocompletion script for the specified shell
+  fix         Diagnose configuration errors
   help        Help about any command
+  recommend   Intelligently analyze your Terraform and OpenTofu configurations
   version     Print the CLI version
 
 Flags:
-  -a, --address string   IP Address and port to use for the LLM model (ex: http://localhost:11434) (default "http://localhost:11434")
-  -f, --file string      Path to the Terraform and OpenTofu file (required)
-  -h, --help             help for kuzco
-  -m, --model string     LLM model to use for generating recommendations (default "llama3.2")
-  -p, --prompt string    User prompt for guiding the response format of the LLM model
-  -t, --tool terraform   Specifies the configuration tooling for configurations. Valid values include: terraform and opentofu (default "terraform")
+  -h, --help   help for kuzco
+
+Use "kuzco [command] --help" for more information about a command.
 ```
 
 ## Contributing
