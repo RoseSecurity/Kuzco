@@ -50,9 +50,9 @@ Error Details:
 %%v
 
 Resolution Steps:
-1. Identify the attribute(s) causing the error.
-2. Refer to the Terraform or OpenTofu documentation for valid syntax and attribute usage for this resource type.
-3. Correct the invalid attribute(s) or remove them if they are unnecessary.
+1. Identify the attribute(s) or syntax causing the error.
+2. Refer to the Terraform or OpenTofu documentation for valid syntax and attribute usage the resources.
+3. Correct the invalid attribute(s), fix the syntax, or remove the invalid attributes if they are unnecessary.
 4. Reformat the corrected resource block if needed.
 
 Example Corrected Configuration:

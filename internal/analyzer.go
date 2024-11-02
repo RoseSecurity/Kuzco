@@ -17,8 +17,8 @@ func Run(filePath, tool, model, prompt, addr string) error {
 	}
 
 	dir := filepath.Dir(filePath)
-
 	var providerSchema ProviderSchema
+
 	switch tool {
 	case "terraform":
 		providerSchema, err = ExtractTerraformProviderSchema(dir)

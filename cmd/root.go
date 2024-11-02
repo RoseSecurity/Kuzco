@@ -22,7 +22,7 @@ var rootCmd = &cobra.Command{
 	Use:   "kuzco",
 	Short: "Intelligently analyze your Terraform and OpenTofu configurations",
 	Long:  `Intelligently analyze your Terraform and OpenTofu configurations to receive personalized recommendations and fixes for boosting efficiency, security, and performance.`,
-	Run:   Banner,
+	Run:   runAnalyzer,
 }
 
 func init() {
@@ -51,21 +51,11 @@ func runAnalyzer(cmd *cobra.Command, args []string) {
 		fmt.Fprintf(os.Stderr, "Model validation error: %v\n", err)
 		os.Exit(1)
 	}
-	options.FontColor = []figlet4go.Color{
-		color, // Magenta
-	}
-	banner, err := ascii.Render("Kuzco")
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error generating ASCII banner: %v\n", err)
-		os.Exit(1)
-	}
-	fmt.Println(banner)
-	cmd.Help() // Print help to explain the required flags
+	cmd.Help()
 }
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		os.Exit(1)
+		u.LogErrorAndExit(err)
 	}
 }

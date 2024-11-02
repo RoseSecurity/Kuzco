@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra/doc"
 )
 
-// Generate documentation for Terramaid commands and output to docs directory
+// Generate documentation for Kuzco commands and output to docs directory
 var docsCmd = &cobra.Command{
 	Use:          "docs",
 	Short:        "Generate documentation for the CLI",
