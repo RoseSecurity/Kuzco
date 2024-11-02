@@ -61,11 +61,12 @@ The following configuration options are available:
 
 ```sh
 ❯ kuzco
-  _  __
- | |/ /  _   _   ____   ___    ___
- | ' /  | | | | |_  /  / __|  / _ \
- | . \  | |_| |  / /  | (__  | (_) |
- |_|\_\  \__,_| /___|  \___|  \___/
+
+██   ██ ██    ██ ███████  ██████  ██████
+██  ██  ██    ██    ███  ██      ██    ██
+█████   ██    ██   ███   ██      ██    ██
+██  ██  ██    ██  ███    ██      ██    ██
+██   ██  ██████  ███████  ██████  ██████
 
 
 Intelligently analyze your Terraform and OpenTofu configurations to receive personalized recommendations for boosting efficiency, security, and performance.
@@ -84,9 +85,8 @@ Flags:
   -f, --file string      Path to the Terraform and OpenTofu file (required)
   -h, --help             help for kuzco
   -m, --model string     LLM model to use for generating recommendations (default "llama3.2")
-  -t, --tool terraform   Specifies the configuration tooling for configurations. Valid values include: terraform and `opentofu` (default "terraform")
-
-Use "kuzco [command] --help" for more information about a command.
+  -p, --prompt string    User prompt for guiding the response format of the LLM model
+  -t, --tool terraform   Specifies the configuration tooling for configurations. Valid values include: terraform and opentofu (default "terraform")
 ```
 
 ## Contributing

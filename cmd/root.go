@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mbndr/figlet4go"
+	"github.com/RoseSecurity/kuzco/internal"
+	tuiUtils "github.com/RoseSecurity/kuzco/internal/tui/utils"
+	u "github.com/RoseSecurity/kuzco/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -30,13 +32,23 @@ func init() {
 	rootCmd.AddCommand(fixCmd)
 }
 
-func Banner(cmd *cobra.Command, args []string) {
+func runAnalyzer(cmd *cobra.Command, args []string) {
+	var err error
+
 	// Check if the required flag is set
-	ascii := figlet4go.NewAsciiRender()
-	options := figlet4go.NewRenderOptions()
-	color, err := figlet4go.NewTrueColorFromHexString("FF00FF")
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error creating color: %v\n", err)
+	if filePath == "" {
+		fmt.Println()
+		err = tuiUtils.PrintStyledText("KUZCO")
+		if err != nil {
+			u.LogErrorAndExit(err)
+		}
+		cmd.Help() // Print help to explain the required flags
+		return
+	}
+
+	// Validate that the specified model exists in Ollama
+	if err := internal.ValidateModel(model, addr); err != nil {
+		fmt.Fprintf(os.Stderr, "Model validation error: %v\n", err)
 		os.Exit(1)
 	}
 	options.FontColor = []figlet4go.Color{
