@@ -9,6 +9,9 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+// PrettyPrint formats and displays markdown content with styled headers and recommendations.
+// It applies custom styling using lipgloss and renders markdown using glamour.
+// The output includes a header, the rendered markdown content, and a footer.
 func PrettyPrint(markdownContent string) {
 	// Create a style for headers
 	headerStyle := lipgloss.NewStyle().
