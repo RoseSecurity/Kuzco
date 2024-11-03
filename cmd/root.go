@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/RoseSecurity/kuzco/internal"
 	tuiUtils "github.com/RoseSecurity/kuzco/internal/tui/utils"
@@ -48,8 +47,7 @@ func runAnalyzer(cmd *cobra.Command, args []string) {
 
 	// Validate that the specified model exists in Ollama
 	if err := internal.ValidateModel(model, addr); err != nil {
-		fmt.Fprintf(os.Stderr, "Model validation error: %v\n", err)
-		os.Exit(1)
+		u.LogErrorAndExit(err)
 	}
 	cmd.Help()
 }

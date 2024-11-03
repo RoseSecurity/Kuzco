@@ -43,6 +43,11 @@ func Diagnose(cmd *cobra.Command, args []string) {
 		u.LogErrorAndExit(err)
 	}
 
+	if len(config) == 0 {
+		fmt.Fprintf(os.Stderr, "Error: configuration file is empty\n")
+		os.Exit(1)
+	}
+
 	// Generate a formatted prompt for the recommendations function
 	formattedPrompt := fmt.Sprintf(`Error detected in configuration file '%s':
 
