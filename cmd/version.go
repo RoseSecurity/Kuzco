@@ -9,9 +9,11 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"golang.org/x/mod/semver"
 )
 
-var Version = "0.2.0"
+// Placeholder for builds
+var Version = "1.0.0"
 
 type Release struct {
 	TagName string `json:"tag_name"`
@@ -28,8 +30,8 @@ var versionCmd = &cobra.Command{
 		if err == nil && latestReleaseTag != "" {
 			latestRelease := strings.TrimPrefix(latestReleaseTag, "v")
 			currentRelease := strings.TrimPrefix(Version, "v")
-			if latestRelease != currentRelease {
-				updateTerramaid(latestRelease)
+			if semver.Compare(latestRelease, currentRelease) > 0 {
+				updateKuzco(latestRelease)
 			}
 		}
 	},
@@ -57,8 +59,8 @@ func latestRelease() (string, error) {
 }
 
 // Display out of date warning
-func updateTerramaid(latestVersion string) {
+func updateKuzco(latestVersion string) {
 	c1 := color.New(color.FgCyan)
 
-	c1.Println(fmt.Sprintf("\nYour version of Terramaid is out of date. The latest version is %s\n\n", latestVersion))
+	c1.Println(fmt.Sprintf("\nYour version of Kuzco is out of date. The latest version is %s\n\n", latestVersion))
 }
