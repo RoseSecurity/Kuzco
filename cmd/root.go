@@ -29,6 +29,9 @@ func init() {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(recommendCmd)
 	rootCmd.AddCommand(fixCmd)
+
+	// Disable auto generated string from documentation so that documentation is cleanly built and updated
+	rootCmd.DisableAutoGenTag = true
 }
 
 func runAnalyzer(cmd *cobra.Command, args []string) {
