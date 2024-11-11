@@ -46,7 +46,7 @@ type ModelsResponse struct {
 func GetRecommendations(resourceType string, unusedAttrs []string, model string, tool string, prompt string, addr string) (string, error) {
 	tool = cases.Title(language.English, cases.NoLower).String(tool)
 	var formattedPrompt string
-	if prompt != "" {
+	if prompt == "" {
 		formattedPrompt = fmt.Sprintf(`Unused attributes for '%s' resource '%s': %v
 
 For each attribute that should be enabled:

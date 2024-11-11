@@ -1,5 +1,5 @@
 BINARY_NAME=kuzco
-VERSION=v1
+VERSION=local
 GO=go
 
 default: help
@@ -13,7 +13,7 @@ fmt: ## Format Go files
 	gofumpt -w .
 
 build: ## Build Kuzco
-	env $(if $(GOOS),GOOS=$(GOOS)) $(if $(GOARCH),GOARCH=$(GOARCH)) $(GO) build -o build/$(BINARY_NAME) -ldflags "-X 'github.com/RoseSecurity/kuzco/cmd.Version=local'" main.go
+	env $(if $(GOOS),GOOS=$(GOOS)) $(if $(GOARCH),GOARCH=$(GOARCH)) $(GO) build -o build/$(BINARY_NAME) -ldflags "-X 'github.com/RoseSecurity/kuzco/cmd.Version=${VERSION}'" main.go
 
 install: ## Install dependencies
 	$(GO) install ./...
@@ -27,5 +27,9 @@ run: build ## Run Kuzco
 
 docs: build ## Generate documentation
 	./build/$(BINARY_NAME) docs
+
+version: build ## View binary version
+	chmod +x ./build/$(BINARY_NAME)
+	./build/$(BINARY_NAME) version
 
 .PHONY: all build install clean run fmt help

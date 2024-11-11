@@ -49,10 +49,13 @@ func Diagnose(cmd *cobra.Command, args []string) {
 	}
 
 	// Generate a formatted prompt for the recommendations function
-	formattedPrompt := fmt.Sprintf(`Error detected in configuration file '%s':
+	prompt := fmt.Sprintf(`Error detected in configuration file '%s':
 
-Error Details:
-%%v
+Configuration File Contents:
+
+'%v'
+
+---
 
 Resolution Steps:
 1. Identify the attribute(s) or syntax causing the error.
@@ -69,10 +72,10 @@ resource "type" "name" {
   attribute2 = "value2"
 }
 
-Please review and update the configuration file as outlined above to resolve the issue.`, filePath)
+Please review and update the configuration file as outlined above to resolve the issue.`, filePath, config)
 
 	// Pass the prompt and file content to GetRecommendations
-	recommendations, err := internal.GetRecommendations(string(config), nil, model, tool, formattedPrompt, addr)
+	recommendations, err := internal.GetRecommendations(string(config), nil, model, tool, prompt, addr)
 	if err != nil {
 		u.LogErrorAndExit(err)
 	}
