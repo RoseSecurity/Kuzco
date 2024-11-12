@@ -15,6 +15,7 @@ var (
 	model    string
 	prompt   string
 	addr     string
+	dryrun   bool
 )
 
 var rootCmd = &cobra.Command{
