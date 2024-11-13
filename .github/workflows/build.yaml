@@ -70,3 +70,15 @@ jobs:
           release: "any-version"
           file: ${{ env.AMD_PACKAGE }}
 
+  homebrew:
+    name: "Bump Homebrew Formula"
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: mislav/bump-homebrew-formula-action@v3
+        with:
+          # A PR will be sent to github.com/Homebrew/homebrew-core to update this formula:
+          formula-name: kuzco
+          formula-path: Formula/k/kuzco.rb
+        env:
+          COMMITTER_TOKEN: ${{ secrets.GH_TOKEN }}

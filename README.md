@@ -23,6 +23,12 @@ Here's the **problem**: You spin up a Terraform or OpenTofu resource, pull a bas
 > [!NOTE]
 > To use `kuzco`, Ollama must be installed. You can do this by running `brew bundle install` or `brew install ollama`. For more information on customizing Ollama models for tailored Kuzco responses, check out [Customizing Ollama](./docs/Customizing_Ollama.md)
 
+### Homebrew
+
+```sh
+brew install kuzco
+```
+
 ### Go
 
 If you have a functional Go environment, you can install with:
