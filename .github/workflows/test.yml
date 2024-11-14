@@ -1,0 +1,68 @@
+name: Test
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths-ignore:
+      - "README.md"
+
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".github/**"
+      - "docs/**"
+
+  workflow_dispatch:
+
+jobs:
+  # Ensure the binary builds
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: "go.mod"
+        id: go
+
+      - name: Get dependencies
+        run: |
+          make deps
+
+      - name: Build
+        run: |
+          make build
+
+      - name: Version
+        run: |
+          make version
+
+  # Run acceptance tests
+  test:
+    name: Acceptance Tests
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: "go.mod"
+        id: go
+
+      - name: Get dependencies
+        run: |
+          make deps
+
+      - name: Acceptance tests
+        timeout-minutes: 10
+        run: |
+          make testacc
