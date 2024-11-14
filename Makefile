@@ -15,12 +15,18 @@ fmt: ## Format Go files
 build: ## Build Kuzco
 	env $(if $(GOOS),GOOS=$(GOOS)) $(if $(GOARCH),GOARCH=$(GOARCH)) $(GO) build -o build/$(BINARY_NAME) -ldflags "-X 'github.com/RoseSecurity/kuzco/cmd.Version=${VERSION}'" main.go
 
-install: ## Install dependencies
-	$(GO) install ./...
+deps: ## Download dependencies
+	go mod download
+
+get: ## Install dependencies
+	go get
 
 clean: ## Clean up build artifacts
 	$(GO) clean
 	rm ./build/$(BINARY_NAME)
+
+testacc: ## Run acceptance tests
+	go test ./...
 
 run: build ## Run Kuzco
 	./build/$(BINARY_NAME)
