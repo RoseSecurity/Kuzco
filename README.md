@@ -85,6 +85,7 @@ Available Commands:
   completion  Generate the autocompletion script for the specified shell
   fix         Diagnose configuration errors
   help        Help about any command
+  list        Lists available Ollama models
   recommend   Intelligently analyze your Terraform and OpenTofu configurations
   version     Print the CLI version
 
