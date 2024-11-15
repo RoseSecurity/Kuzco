@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 )
 
 type Model struct {
@@ -12,6 +13,10 @@ type Model struct {
 
 // ListModels lists available models from Ollama
 func ListModels(addr string) ([]string, error) {
+	if _, err := url.Parse(addr); err != nil {
+		return nil, fmt.Errorf("invalid address provided: %v", err)
+	}
+
 	resp, err := http.Get(fmt.Sprintf("%s/api/tags", addr))
 	if err != nil {
 		return nil, fmt.Errorf("error fetching models from Ollama: %v", err)
