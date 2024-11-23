@@ -12,7 +12,7 @@ require (
 	github.com/jwalton/go-supportscolor v1.2.0
 	github.com/mattn/go-colorable v0.1.13
 	github.com/spf13/cobra v1.8.1
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	golang.org/x/mod v0.22.0
 	golang.org/x/text v0.20.0
 )
