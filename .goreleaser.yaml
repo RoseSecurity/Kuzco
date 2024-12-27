@@ -1,3 +1,6 @@
+# Copyright (c) RoseSecurity
+# SPDX-License-Identifier: Apache-2.0
+
 # Make sure to check the documentation at https://goreleaser.com
 
 version: 2

@@ -25,6 +25,9 @@ clean: ## Clean up build artifacts
 	$(GO) clean
 	rm ./build/$(BINARY_NAME)
 
+generate: ## Generate tooling licensing
+	cd tools; go generate ./...
+
 testacc: ## Run acceptance tests
 	go test ./...
 

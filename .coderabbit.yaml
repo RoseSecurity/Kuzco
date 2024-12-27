@@ -1,3 +1,6 @@
+# Copyright (c) RoseSecurity
+# SPDX-License-Identifier: Apache-2.0
+
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: "en-US"
 tone_instructions: "Maintain a conversational spartan tone that is supportive in all responses."
