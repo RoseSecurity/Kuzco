@@ -4,7 +4,7 @@ go 1.23.1
 
 require (
 	github.com/arsham/figurine v1.3.0
-	github.com/briandowns/spinner v1.23.1
+	github.com/briandowns/spinner v1.23.2
 	github.com/charmbracelet/glamour v0.8.0
 	github.com/charmbracelet/lipgloss v1.0.0
 	github.com/fatih/color v1.18.0
