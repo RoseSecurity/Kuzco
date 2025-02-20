@@ -199,6 +199,7 @@ github.com/hashicorp/consul/sdk v0.8.0/go.mod h1:GBvyrGALthsZObzUGsfgHZQDXjg4lOj
 github.com/hashicorp/copywrite v0.19.0 h1:f9LVxTDBfFYeQmdBpOsZ+HWknXonI8ZwubbO/RwyuCo=
 github.com/hashicorp/copywrite v0.19.0/go.mod h1:6wvQH+ICDoD2bpjO1RJ6fi+h3aY5NeLEM12oTkEtFoc=
 github.com/hashicorp/copywrite v0.20.0/go.mod h1:mu6DAyUI6m6vq8weoJn9a0HDuUUrV+0GQdRp4mD50yU=
+github.com/hashicorp/copywrite v0.21.0/go.mod h1:mu6DAyUI6m6vq8weoJn9a0HDuUUrV+0GQdRp4mD50yU=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/go-cleanhttp v0.5.0/go.mod h1:JpRdi6/HCYpAwUzNwuwqhbovhLtngrth3wmdIIUrZ80=
 github.com/hashicorp/go-cleanhttp v0.5.1/go.mod h1:JpRdi6/HCYpAwUzNwuwqhbovhLtngrth3wmdIIUrZ80=
