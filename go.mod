@@ -8,7 +8,7 @@ require (
 	github.com/charmbracelet/glamour v0.9.1
 	github.com/charmbracelet/lipgloss v1.1.0
 	github.com/fatih/color v1.18.0
-	github.com/hashicorp/copywrite v0.21.0
+	github.com/hashicorp/copywrite v0.22.0
 	github.com/hashicorp/hcl/v2 v2.23.0
 	github.com/jwalton/go-supportscolor v1.2.0
 	github.com/mattn/go-colorable v0.1.14
