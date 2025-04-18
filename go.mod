@@ -5,8 +5,8 @@ go 1.23.1
 require (
 	github.com/arsham/figurine v1.3.0
 	github.com/briandowns/spinner v1.23.2
-	github.com/charmbracelet/glamour v0.9.1
-	github.com/charmbracelet/lipgloss v1.1.0
+	github.com/charmbracelet/glamour v0.10.0
+	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
 	github.com/fatih/color v1.18.0
 	github.com/hashicorp/copywrite v0.22.0
 	github.com/hashicorp/hcl/v2 v2.23.0
@@ -33,7 +33,8 @@ require (
 	github.com/bradleyfalzon/ghinstallation/v2 v2.5.0 // indirect
 	github.com/charmbracelet/colorprofile v0.2.3-0.20250311203215-f60798e515dc // indirect
 	github.com/charmbracelet/x/ansi v0.8.0 // indirect
-	github.com/charmbracelet/x/cellbuf v0.0.13-0.20250311204145-2c3ea96c31dd // indirect
+	github.com/charmbracelet/x/cellbuf v0.0.13 // indirect
+	github.com/charmbracelet/x/exp/slice v0.0.0-20250327172914-2fdc97757edf // indirect
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/cli/go-gh v1.2.1 // indirect
 	github.com/cli/safeexec v1.0.0 // indirect
@@ -94,8 +95,8 @@ require (
 	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/oauth2 v0.8.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/term v0.30.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/term v0.31.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
