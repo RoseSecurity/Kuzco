@@ -15,7 +15,7 @@ import (
 	"golang.org/x/mod/semver"
 )
 
-// Placeholder for builds
+// Placeholder for builds.
 var Version = "1.0.0"
 
 type Release struct {
@@ -40,7 +40,7 @@ var versionCmd = &cobra.Command{
 	},
 }
 
-// Fetch latest release for comparison to current version
+// Fetch latest release for comparison to current version.
 func latestRelease() (string, error) {
 	resp, err := http.Get("https://api.github.com/repos/RoseSecurity/Kuzco/releases/latest")
 	if err != nil {
@@ -61,7 +61,7 @@ func latestRelease() (string, error) {
 	return release.TagName, nil
 }
 
-// Display out of date warning
+// Display out of date warning.
 func updateKuzco(latestVersion string) {
 	c1 := color.New(color.FgCyan)
 

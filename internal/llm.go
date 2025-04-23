@@ -16,31 +16,31 @@ import (
 	"golang.org/x/text/language"
 )
 
-// ANSI color codes
+// ANSI color codes.
 const (
 	ColorReset = "\033[0m"
 	ColorGreen = "\033[32m"
 	ColorBold  = "\033[1m"
 )
 
-// LlamaRequest represents a request to the Llama API
+// LlamaRequest represents a request to the Llama API.
 type LlamaRequest struct {
 	Model  string `json:"model"`
 	Prompt string `json:"prompt"`
 	Stream bool   `json:"stream"`
 }
 
-// LlamaResponse represents a response from the Llama API
+// LlamaResponse represents a response from the Llama API.
 type LlamaResponse struct {
 	Recommendations string `json:"response"`
 }
 
-// Model represents the structure of a model in the response
+// Model represents the structure of a model in the response.
 type Model struct {
 	Name string `json:"name"`
 }
 
-// ModelsResponse represents the structure of the response from /api/tags
+// ModelsResponse represents the structure of the response from /api/tags.
 type ModelsResponse struct {
 	Models []Model `json:"models"`
 }
@@ -61,7 +61,7 @@ Example output:
 resource "type" "name" {
   # Enables feature X for improved security
   attribute1 = value1
-  
+
   # Optimizes performance by setting Y
   attribute2 = value2
 }`, tool, resourceType, unusedAttrs)
@@ -74,7 +74,7 @@ Example output:
 resource "type" "name" {
   # Enables feature X for improved security
   attribute1 = value1
-  
+
   # Optimizes performance by setting Y
   attribute2 = value2
 }`, tool, resourceType, unusedAttrs, prompt)
@@ -88,7 +88,7 @@ resource "type" "name" {
 
 	jsonData, err := json.Marshal(requestBody)
 	if err != nil {
-		return "", fmt.Errorf("error marshaling request: %v", err)
+		return "", fmt.Errorf("%w: %v", errMakingRequest, err)
 	}
 
 	// Initialize and start the spinner
@@ -104,7 +104,7 @@ resource "type" "name" {
 	if err != nil {
 		s.Stop()
 		fmt.Println()
-		return "", fmt.Errorf("error making request to API: %v", err)
+		return "", fmt.Errorf("%w: %v", errMakingRequest, err)
 	}
 	defer resp.Body.Close()
 
@@ -115,13 +115,13 @@ resource "type" "name" {
 	// Read and decode the response
 	var llamaResp LlamaResponse
 	if err := json.NewDecoder(resp.Body).Decode(&llamaResp); err != nil {
-		return "", fmt.Errorf("error decoding response: %v", err)
+		return "", fmt.Errorf("%w: %v", errDecodingResponse, err)
 	}
 
 	return llamaResp.Recommendations, nil
 }
 
-// ValidateModel checks if the specified model exists in Ollama
+// ValidateModel checks if the specified model exists in Ollama.
 func ValidateModel(model, addr string) error {
 	// Get a list of available models from Ollama
 	resp, err := http.Get(fmt.Sprintf("%s/api/tags", addr))

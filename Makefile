@@ -12,6 +12,9 @@ all: build
 fmt: ## Format Go files
 	gofumpt -w .
 
+lint:
+	golangci-lint run
+
 build: ## Build Kuzco
 	env $(if $(GOOS),GOOS=$(GOOS)) $(if $(GOARCH),GOARCH=$(GOARCH)) $(GO) build -o build/$(BINARY_NAME) -ldflags "-X 'github.com/RoseSecurity/kuzco/cmd.Version=${VERSION}'" main.go
 

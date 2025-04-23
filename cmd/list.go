@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// listCmd commands lists models
+// listCmd commands lists models.
 var listCmd = &cobra.Command{
 	Use:                "list",
 	Short:              "Lists available Ollama models",

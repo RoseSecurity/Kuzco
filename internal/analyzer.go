@@ -7,16 +7,23 @@ import (
 	"fmt"
 	"path/filepath"
 	"strings"
+
+	log "github.com/charmbracelet/log"
 )
 
 func Run(filePath, tool, model, prompt, addr string) error {
 	if !(strings.HasSuffix(filePath, ".tf") || strings.HasSuffix(filePath, ".tofu")) {
-		return fmt.Errorf("the provided file must have a .tf or .tofu extension")
+		return fmt.Errorf("invalid file extension: %s", filePath)
 	}
 
 	resources, err := ParseConfigurationFile(filePath)
 	if err != nil {
-		return fmt.Errorf("error parsing configuration file: %v", err)
+		return fmt.Errorf("failed to parse HCL configuration: %w", err)
+	}
+
+	if len(resources) == 0 {
+		log.Warnf("No resources found in file: %s", filePath)
+		return nil
 	}
 
 	dir := filepath.Dir(filePath)
@@ -25,20 +32,18 @@ func Run(filePath, tool, model, prompt, addr string) error {
 	switch tool {
 	case "terraform":
 		providerSchema, err = ExtractTerraformProviderSchema(dir)
-		if err != nil {
-			return fmt.Errorf("error extracting Terraform provider schema: %v", err)
-		}
 	case "opentofu":
 		providerSchema, err = ExtractOpenTofuProviderSchema(dir)
-		if err != nil {
-			return fmt.Errorf("error extracting OpenTofu provider schema: %v", err)
-		}
 	default:
-		return fmt.Errorf("unsupported tool: %s. Supported tools are 'terraform' and 'opentofu'", tool)
+		return fmt.Errorf("unsupported tool: %s", tool)
+	}
+
+	if err != nil {
+		return fmt.Errorf("error extracting provider schema: %w", err)
 	}
 
 	if err := printDiff(resources, providerSchema, model, tool, prompt, addr); err != nil {
-		return fmt.Errorf("error printing differences: %v", err)
+		return fmt.Errorf("error printing differences: %w", err)
 	}
 
 	return nil
@@ -46,28 +51,29 @@ func Run(filePath, tool, model, prompt, addr string) error {
 
 func printDiff(resources []Resource, schema ProviderSchema, model, tool, prompt, addr string) error {
 	for _, resource := range resources {
-		if possibleAttrs, ok := schema.ResourceTypes[resource.Type]; ok {
-			usedAttrs := resource.Attributes
-			unusedAttrs := findUnusedAttributes(usedAttrs, possibleAttrs)
+		possibleAttrs, ok := schema.ResourceTypes[resource.Type]
+		if !ok {
+			log.Warnf("Warning: Resource type %s not found in schema.", resource.Type)
+			continue
+		}
 
-			if len(unusedAttrs) > 0 {
-				// Get recommendations based on unused attributes
-				recommendations, err := GetRecommendations(resource.Type, unusedAttrs, model, tool, prompt, addr)
-				if err != nil {
-					return fmt.Errorf("error getting recommendations for resource %s: %v", resource.Name, err)
-				}
-				PrettyPrint(recommendations)
-			} else {
-				fmt.Printf("Resource: %s (Type: %s) - All attributes are used.\n\n", resource.Name, resource.Type)
+		usedAttrs := resource.Attributes
+		unusedAttrs := findUnusedAttributes(usedAttrs, possibleAttrs)
+
+		if len(unusedAttrs) > 0 {
+			recommendations, err := GetRecommendations(resource.Type, unusedAttrs, model, tool, prompt, addr)
+			if err != nil {
+				return fmt.Errorf("error fetching recommendations for resource %s: %w", resource.Name, err)
 			}
+			PrettyPrint(recommendations)
 		} else {
-			fmt.Printf("Warning: Resource type %s not found in schema.\n", resource.Type)
+			log.Infof("Resource: %s (Type: %s) - All attributes are used.", resource.Name, resource.Type)
 		}
 	}
 	return nil
 }
 
-func findUnusedAttributes(usedAttrs map[string]string, possibleAttrs map[string]interface{}) []string {
+func findUnusedAttributes(usedAttrs map[string]any, possibleAttrs map[string]any) []string {
 	var unusedAttrs []string
 	for attr := range possibleAttrs {
 		if _, used := usedAttrs[attr]; !used {

@@ -18,7 +18,7 @@ const (
 	LogLevelWarning = "Warning"
 )
 
-// LogErrorAndExit logs errors to std.Error and exits with an error code
+// LogErrorAndExit logs errors to std.Error and exits with an error code.
 func LogErrorAndExit(err error) {
 	if err != nil {
 		LogError(err)
@@ -32,7 +32,7 @@ func LogErrorAndExit(err error) {
 	}
 }
 
-// LogError logs errors to std.Error
+// LogError logs errors to std.Error.
 func LogError(err error) {
 	if err != nil {
 		c := color.New(color.FgRed)

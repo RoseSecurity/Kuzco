@@ -20,6 +20,7 @@ kuzco [flags]
 
 * [kuzco completion](kuzco_completion.md)	 - Generate the autocompletion script for the specified shell
 * [kuzco fix](kuzco_fix.md)	 - Diagnose configuration errors
+* [kuzco list](kuzco_list.md)	 - Lists available Ollama models
 * [kuzco recommend](kuzco_recommend.md)	 - Intelligently analyze your Terraform and OpenTofu configurations
 * [kuzco version](kuzco_version.md)	 - Print the CLI version
 

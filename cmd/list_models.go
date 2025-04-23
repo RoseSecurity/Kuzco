@@ -13,7 +13,7 @@ import (
 	u "github.com/RoseSecurity/kuzco/pkg/utils"
 )
 
-// ListModelsCmd lists Ollama models
+// ListModelsCmd lists Ollama models.
 var listModelsCmd = &cobra.Command{
 	Use:                "models",
 	Short:              "Lists available Ollama models",

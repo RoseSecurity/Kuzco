@@ -10,7 +10,7 @@ import (
 	"github.com/jwalton/go-supportscolor"
 )
 
-// PrintStyledText prints a styled text to the terminal
+// PrintStyledText prints a styled text to the terminal.
 func PrintStyledText(text string) error {
 	// Check if the terminal supports colors
 	if supportscolor.Stdout().SupportsColor {

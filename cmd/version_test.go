@@ -15,7 +15,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Mock the HTTP client
+// Mock the HTTP client.
 func TestLatestRelease(t *testing.T) {
 	mockResponse := Release{TagName: "v1.1.0"}
 	mockData, _ := json.Marshal(mockResponse)
@@ -26,8 +26,7 @@ func TestLatestRelease(t *testing.T) {
 	}))
 	defer server.Close()
 
-	originalURL := "https://api.github.com/repos/RoseSecurity/Kuzco/releases/latest"
-	defer func() { originalURL = originalURL }() // Reset after test
+	defer func() {}()
 
 	resp, err := http.Get(server.URL)
 	assert.NoError(t, err)
@@ -39,6 +38,7 @@ func TestLatestRelease(t *testing.T) {
 	err = json.Unmarshal(body, &release)
 	assert.NoError(t, err)
 	assert.Equal(t, "v1.1.0", release.TagName)
+	resp.Body.Close()
 }
 
 func TestUpdateKuzco(t *testing.T) {

@@ -14,7 +14,7 @@ type Model struct {
 	Name string `json:"name"`
 }
 
-// ListModels lists available models from Ollama
+// ListModels lists available models from Ollama.
 func ListModels(addr string) ([]string, error) {
 	if _, err := url.Parse(addr); err != nil {
 		return nil, fmt.Errorf("invalid address provided: %v", err)
