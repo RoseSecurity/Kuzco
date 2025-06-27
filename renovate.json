@@ -1,10 +1,16 @@
 {
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "packageRules": [
     {
       "description": "Update Go Dependencies",
-      "managers": ["gomod"],
-      "schedule": ["at any time"]
+      "matchManagers": [
+        "gomod"
+      ],
+      "schedule": [
+        "at any time"
+      ]
     }
   ]
 }
