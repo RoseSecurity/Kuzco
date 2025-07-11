@@ -1,8 +1,6 @@
 # Kuzco
 
-<p align="center">
-<img width=90% height=80% src="./docs/img/kuzco-logo.png">
-</p>
+<img width="2296" height="1504" alt="kuzco-logo" src="https://github.com/user-attachments/assets/008900ac-0cbb-43a3-be31-0f80f8e91b68" />
 
 <p align="center">
   <em>Enhance your Terraform and OpenTofu configurations with intelligent analysis powered by local LLMs</em>
@@ -14,9 +12,7 @@ Here's the **problem**: You spin up a Terraform or OpenTofu resource, pull a bas
 
 ## Demo
 
-<p align="center">
-<img width=100% height=100% src="./docs/img/kuzco-demo.gif">
-</p>
+![kuzco-demo](https://github.com/user-attachments/assets/a2e436ba-32e7-4fe8-b51c-4333d77e095a)
 
 ## Installation
 
