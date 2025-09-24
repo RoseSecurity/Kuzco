@@ -61,7 +61,7 @@ Example output:
 resource "type" "name" {
   # Enables feature X for improved security
   attribute1 = value1
-  
+
   # Optimizes performance by setting Y
   attribute2 = value2
 }`, tool, resourceType, unusedAttrs)
@@ -74,7 +74,7 @@ Example output:
 resource "type" "name" {
   # Enables feature X for improved security
   attribute1 = value1
-  
+
   # Optimizes performance by setting Y
   attribute2 = value2
 }`, tool, resourceType, unusedAttrs, prompt)

@@ -68,11 +68,34 @@ func printDiff(resources []Resource, schema ProviderSchema, model, tool, prompt,
 }
 
 func findUnusedAttributes(usedAttrs map[string]string, possibleAttrs map[string]interface{}) []string {
-	var unusedAttrs []string
-	for attr := range possibleAttrs {
-		if _, used := usedAttrs[attr]; !used {
-			unusedAttrs = append(unusedAttrs, attr)
-		}
-	}
-	return unusedAttrs
+    validNames := make(map[string]struct{})
+
+    if blockAny, ok := possibleAttrs["block"]; ok {
+        if block, ok := blockAny.(map[string]interface{}); ok {
+            //Attributes at the current block level
+            if attrsAny, ok := block["attributes"]; ok {
+                if attrsMap, ok := attrsAny.(map[string]interface{}); ok {
+                    for name := range attrsMap {
+                        validNames[name] = struct{}{}
+                    }
+                }
+            }
+            // Nested block types at this level (their names appear as top-level blocks in HCL)
+            if blockTypesAny, ok := block["block_types"]; ok {
+                if btMap, ok := blockTypesAny.(map[string]interface{}); ok {
+                    for name := range btMap {
+                        validNames[name] = struct{}{}
+                    }
+                }
+            }
+        }
+    }
+
+    var unused []string
+    for name := range validNames {
+        if _, used := usedAttrs[name]; !used {
+            unused = append(unused, name)
+        }
+    }
+    return unused
 }
