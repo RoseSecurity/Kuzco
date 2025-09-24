@@ -47,17 +47,14 @@ func ParseConfigurationFile(file string) ([]Resource, error) {
 		resourceName := block.Labels[1]
 		attributes := make(map[string]string)
 
-		bodyContent, _, _ := block.Body.PartialContent(&hcl.BodySchema{
-			Attributes: []hcl.AttributeSchema{},
-		})
-
-		for attrName, attr := range bodyContent.Attributes {
-			value, diag := attr.Expr.Value(nil)
-			if diag.HasErrors() {
-				fmt.Printf("Error evaluating attribute %s in file %s: %s\n", attrName, file, diag.Error())
-				continue
-			}
-			attributes[attrName] = value.AsString()
+		// Collect all attributes present without requiring a schema and without evaluating expressions.
+		attrs, moreDiags := block.Body.JustAttributes()
+		if moreDiags.HasErrors() {
+			fmt.Printf("Warning: issues when reading attributes for %s.%s in file %s: %s\n", resourceType, resourceName, file, moreDiags.Error())
+		}
+		for attrName := range attrs {
+			// We only need attribute keys for unused detection downstream.
+			attributes[attrName] = ""
 		}
 
 		resources = append(resources, Resource{
