@@ -6,6 +6,7 @@ package internal
 import (
 	"fmt"
 	"path/filepath"
+	"sort"
 	"strings"
 )
 
@@ -65,35 +66,37 @@ func testPossibleAttributes(resources []Resource, schema ProviderSchema, tool st
 }
 
 // testFindUnusedAttributes identifies unused attributes by comparing used and possible attributes.
-func testFindUnusedAttributes(usedAttrs map[string]string, possibleAttrs map[string]interface{}) []string {
-    // Mirror logic in analyzer's findUnusedAttributes: only consider names
-    // under block.attributes and block.block_types.
-    validNames := make(map[string]struct{})
+func testFindUnusedAttributes(usedAttrs map[string]string, possibleAttrs map[string]any) []string {
+	// Mirror logic in analyzer's findUnusedAttributes: only consider names
+	// under block.attributes and block.block_types.
+	validNames := make(map[string]struct{})
 
-    if blockAny, ok := possibleAttrs["block"]; ok {
-        if block, ok := blockAny.(map[string]interface{}); ok {
-            if attrsAny, ok := block["attributes"]; ok {
-                if attrsMap, ok := attrsAny.(map[string]interface{}); ok {
-                    for name := range attrsMap {
-                        validNames[name] = struct{}{}
-                    }
-                }
-            }
-            if blockTypesAny, ok := block["block_types"]; ok {
-                if btMap, ok := blockTypesAny.(map[string]interface{}); ok {
-                    for name := range btMap {
-                        validNames[name] = struct{}{}
-                    }
-                }
-            }
-        }
-    }
+	if blockAny, ok := possibleAttrs["block"]; ok {
+		if block, ok := blockAny.(map[string]any); ok {
+			if attrsAny, ok := block["attributes"]; ok {
+				if attrsMap, ok := attrsAny.(map[string]any); ok {
+					for name := range attrsMap {
+						validNames[name] = struct{}{}
+					}
+				}
+			}
+			if blockTypesAny, ok := block["block_types"]; ok {
+				if btMap, ok := blockTypesAny.(map[string]any); ok {
+					for name := range btMap {
+						validNames[name] = struct{}{}
+					}
+				}
+			}
+		}
+	}
 
-    var unused []string
-    for name := range validNames {
-        if _, used := usedAttrs[name]; !used {
-            unused = append(unused, name)
-        }
-    }
-    return unused
+	var unused []string
+	for name := range validNames {
+		if _, used := usedAttrs[name]; !used {
+			unused = append(unused, name)
+		}
+	}
+	sort.Strings(unused)
+
+	return unused
 }
