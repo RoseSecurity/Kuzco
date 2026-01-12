@@ -2,7 +2,7 @@ module github.com/RoseSecurity/kuzco
 
 go 1.24.0
 
-toolchain go1.24.11
+toolchain go1.25.5
 
 require (
 	github.com/arsham/figurine v1.3.0
