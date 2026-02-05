@@ -11,7 +11,7 @@ require (
 	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
 	github.com/charmbracelet/lipgloss/v2 v2.0.0-beta.3
 	github.com/fatih/color v1.18.0
-	github.com/hashicorp/copywrite v0.24.1
+	github.com/hashicorp/copywrite v0.24.2
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/jwalton/go-supportscolor v1.2.0
 	github.com/mattn/go-colorable v0.1.14
