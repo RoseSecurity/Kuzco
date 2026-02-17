@@ -12,7 +12,7 @@ import (
 
 func ExtractOpenTofuProviderSchema(rootDir string) (ProviderSchema, error) {
 	schema := ProviderSchema{
-		ResourceTypes: make(map[string]map[string]interface{}),
+		ResourceTypes: make(map[string]map[string]any),
 	}
 
 	initCmd := exec.Command("tofu", "init")
@@ -33,17 +33,17 @@ func ExtractOpenTofuProviderSchema(rootDir string) (ProviderSchema, error) {
 		return schema, fmt.Errorf("error running tofu providers schema -json: %v\nStderr: %s", err, stderr.String())
 	}
 
-	var providerData map[string]interface{}
+	var providerData map[string]any
 	if err := json.Unmarshal(output, &providerData); err != nil {
 		return schema, fmt.Errorf("error unmarshaling provider schema JSON: %v", err)
 	}
 
-	if providerSchemas, ok := providerData["provider_schemas"].(map[string]interface{}); ok {
+	if providerSchemas, ok := providerData["provider_schemas"].(map[string]any); ok {
 		for _, provider := range providerSchemas {
-			if providerMap, ok := provider.(map[string]interface{}); ok {
-				if resourceSchemas, ok := providerMap["resource_schemas"].(map[string]interface{}); ok {
+			if providerMap, ok := provider.(map[string]any); ok {
+				if resourceSchemas, ok := providerMap["resource_schemas"].(map[string]any); ok {
 					for resType, attributes := range resourceSchemas {
-						if attrMap, ok := attributes.(map[string]interface{}); ok {
+						if attrMap, ok := attributes.(map[string]any); ok {
 							schema.ResourceTypes[resType] = attrMap
 						}
 					}
