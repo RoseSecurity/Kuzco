@@ -10,8 +10,8 @@ import (
 // listCmd commands lists models
 var listCmd = &cobra.Command{
 	Use:                "list",
-	Short:              "Lists available Ollama models",
-	Long:               `Queries and lists available Ollama models for Kuzco use`,
+	Short:              "Lists available LLM models",
+	Long:               `Queries and lists available LLM models for Kuzco use`,
 	FParseErrWhitelist: struct{ UnknownFlags bool }{UnknownFlags: false},
 }
 

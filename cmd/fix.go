@@ -34,10 +34,17 @@ func Diagnose(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	// Validate that the specified model exists in Ollama
-	if err := internal.ValidateModel(model, addr); err != nil {
-		fmt.Fprintf(os.Stderr, "Model validation error: %v\n", err)
-		os.Exit(1)
+	// Validate that the specified model exists
+	if internal.IsClaudeModel(model) {
+		if err := internal.ValidateClaudeModel(model); err != nil {
+			fmt.Fprintf(os.Stderr, "Model validation error: %v\n", err)
+			os.Exit(1)
+		}
+	} else {
+		if err := internal.ValidateOllamaModel(model, addr); err != nil {
+			fmt.Fprintf(os.Stderr, "Model validation error: %v\n", err)
+			os.Exit(1)
+		}
 	}
 
 	// Read the configuration file content
@@ -70,15 +77,15 @@ Example Corrected Configuration:
 resource "type" "name" {
   # Explanation of attribute1's purpose
   attribute1 = "value1"
-  
+
   # Optional comment for attribute2
   attribute2 = "value2"
 }
 
 Please review and update the configuration file as outlined above to resolve the issue.`, filePath, config)
 
-	// Pass the prompt and file content to GetRecommendations
-	recommendations, err := internal.GetRecommendations(string(config), nil, model, tool, prompt, addr)
+	// Pass the prompt to the appropriate LLM backend
+	recommendations, err := internal.GetFix(prompt, model, addr)
 	if err != nil {
 		u.LogErrorAndExit(err)
 	}
