@@ -11,7 +11,7 @@ import (
 )
 
 func Run(filePath, tool, model, prompt, addr string) error {
-	if !(strings.HasSuffix(filePath, ".tf") || strings.HasSuffix(filePath, ".tofu")) {
+	if !strings.HasSuffix(filePath, ".tf") && !strings.HasSuffix(filePath, ".tofu") {
 		return fmt.Errorf("the provided file must have a .tf or .tofu extension")
 	}
 

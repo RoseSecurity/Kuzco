@@ -43,9 +43,15 @@ func Analyze(cmd *cobra.Command, args []string) {
 		os.Exit(0)
 	}
 
-	// Validate that the specified model exists in Ollama
-	if err := internal.ValidateModel(model, addr); err != nil {
-		u.LogErrorAndExit(err)
+	// Validate that the specified model exists
+	if internal.IsClaudeModel(model) {
+		if err := internal.ValidateClaudeModel(model); err != nil {
+			u.LogErrorAndExit(err)
+		}
+	} else {
+		if err := internal.ValidateOllamaModel(model, addr); err != nil {
+			u.LogErrorAndExit(err)
+		}
 	}
 
 	// Proceed with the main logic if all required flags are set

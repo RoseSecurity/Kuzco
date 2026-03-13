@@ -1,6 +1,7 @@
 // Copyright (c) RoseSecurity
 // SPDX-License-Identifier: Apache-2.0
 
+// Package cmd provides the CLI commands for Kuzco.
 package cmd
 
 import (
@@ -48,15 +49,21 @@ func runAnalyzer(cmd *cobra.Command, args []string) {
 		if err != nil {
 			u.LogErrorAndExit(err)
 		}
-		cmd.Help() // Print help to explain the required flags
+		_ = cmd.Help() // Print help to explain the required flags
 		return
 	}
 
-	// Validate that the specified model exists in Ollama
-	if err := internal.ValidateModel(model, addr); err != nil {
-		u.LogErrorAndExit(err)
+	// Validate that the specified model exists
+	if internal.IsClaudeModel(model) {
+		if err := internal.ValidateClaudeModel(model); err != nil {
+			u.LogErrorAndExit(err)
+		}
+	} else {
+		if err := internal.ValidateOllamaModel(model, addr); err != nil {
+			u.LogErrorAndExit(err)
+		}
 	}
-	cmd.Help()
+	_ = cmd.Help()
 }
 
 func Execute() {

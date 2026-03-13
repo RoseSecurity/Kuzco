@@ -12,7 +12,7 @@ import (
 
 // DryRun checks the provided file for unused attributes based on a provider schema.
 func DryRun(filePath, tool string) ([]string, error) {
-	if !(strings.HasSuffix(filePath, ".tf") || strings.HasSuffix(filePath, ".tofu")) {
+	if !strings.HasSuffix(filePath, ".tf") && !strings.HasSuffix(filePath, ".tofu") {
 		return nil, fmt.Errorf("the provided file must have a .tf or .tofu extension")
 	}
 

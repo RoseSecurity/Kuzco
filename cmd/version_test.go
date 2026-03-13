@@ -22,12 +22,9 @@ func TestLatestRelease(t *testing.T) {
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write(mockData)
+		_, _ = w.Write(mockData)
 	}))
 	defer server.Close()
-
-	originalURL := "https://api.github.com/repos/RoseSecurity/Kuzco/releases/latest"
-	defer func() { originalURL = originalURL }() // Reset after test
 
 	resp, err := http.Get(server.URL)
 	assert.NoError(t, err)

@@ -10,12 +10,13 @@ import (
 	"net/url"
 )
 
-type Model struct {
+// OllamaModel represents the structure of an Ollama model
+type OllamaModel struct {
 	Name string `json:"name"`
 }
 
-// ListModels lists available models from Ollama
-func ListModels(addr string) ([]string, error) {
+// ListOllamaModels lists available models from Ollama
+func ListOllamaModels(addr string) ([]string, error) {
 	if _, err := url.Parse(addr); err != nil {
 		return nil, fmt.Errorf("invalid address provided: %v", err)
 	}
@@ -31,7 +32,7 @@ func ListModels(addr string) ([]string, error) {
 	}
 
 	var result struct {
-		Models []Model `json:"models"`
+		Models []OllamaModel `json:"models"`
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {

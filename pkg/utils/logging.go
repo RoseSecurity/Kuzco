@@ -26,9 +26,10 @@ func LogErrorAndExit(err error) {
 		// Find the executed command's exit code from the error
 		var exitError *exec.ExitError
 		if errors.As(err, &exitError) {
-			exitCode := exitError.ExitCode()
-			os.Exit(exitCode)
+			os.Exit(exitError.ExitCode())
 		}
+
+		os.Exit(1)
 	}
 }
 
