@@ -10,12 +10,16 @@ import (
 	"os/exec"
 )
 
-func ExtractOpenTofuProviderSchema(rootDir string) (ProviderSchema, error) {
+func ExtractOpenTofuProviderSchema(rootDir string, initBackend bool) (ProviderSchema, error) {
 	schema := ProviderSchema{
 		ResourceTypes: make(map[string]map[string]any),
 	}
 
-	initCmd := exec.Command("tofu", "init")
+	initArgs := []string{"init"}
+	if !initBackend {
+		initArgs = append(initArgs, "-backend=false")
+	}
+	initCmd := exec.Command("tofu", initArgs...)
 	initCmd.Dir = rootDir
 	var initStderr bytes.Buffer
 	initCmd.Stderr = &initStderr

@@ -25,6 +25,7 @@ func init() {
 	recommendCmd.Flags().StringVarP(&model, "model", "m", "llama3.2", "LLM model to use for generating recommendations")
 	recommendCmd.Flags().StringVarP(&prompt, "prompt", "p", "", "User prompt for guiding the response format of the LLM model")
 	recommendCmd.Flags().StringVarP(&addr, "address", "a", "http://localhost:11434", "IP Address and port to use for the LLM model (ex: http://localhost:11434)")
+	recommendCmd.Flags().BoolVar(&initBackend, "init-backend", false, "Initialize the backend during terraform/tofu init")
 	recommendCmd.Flags().BoolVar(&dryrun, "dry-run", false, "Test unused parameter functionality")
 	// Hide dry run flag
 	recommendCmd.Flags().Lookup("dry-run").Hidden = true
@@ -34,7 +35,7 @@ func Analyze(cmd *cobra.Command, args []string) {
 	// Run the logic test if the flag is set
 	if dryrun {
 		var unusedAttrs []string
-		unusedAttrs, err := internal.DryRun(filePath, tool)
+		unusedAttrs, err := internal.DryRun(filePath, tool, initBackend)
 		if err != nil {
 			u.LogErrorAndExit(err)
 		} else {
@@ -55,7 +56,7 @@ func Analyze(cmd *cobra.Command, args []string) {
 	}
 
 	// Proceed with the main logic if all required flags are set
-	if err := internal.Run(filePath, tool, model, prompt, addr); err != nil {
+	if err := internal.Run(filePath, tool, model, prompt, addr, initBackend); err != nil {
 		u.LogErrorAndExit(err)
 	}
 }
