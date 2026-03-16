@@ -11,7 +11,7 @@ import (
 )
 
 // DryRun checks the provided file for unused attributes based on a provider schema.
-func DryRun(filePath, tool string) ([]string, error) {
+func DryRun(filePath, tool string, initBackend bool) ([]string, error) {
 	if !strings.HasSuffix(filePath, ".tf") && !strings.HasSuffix(filePath, ".tofu") {
 		return nil, fmt.Errorf("the provided file must have a .tf or .tofu extension")
 	}
@@ -27,12 +27,12 @@ func DryRun(filePath, tool string) ([]string, error) {
 
 	switch tool {
 	case "terraform":
-		providerSchema, err = ExtractTerraformProviderSchema(dir)
+		providerSchema, err = ExtractTerraformProviderSchema(dir, initBackend)
 		if err != nil {
 			return nil, fmt.Errorf("error extracting Terraform provider schema: %v", err)
 		}
 	case "opentofu":
-		providerSchema, err = ExtractOpenTofuProviderSchema(dir)
+		providerSchema, err = ExtractOpenTofuProviderSchema(dir, initBackend)
 		if err != nil {
 			return nil, fmt.Errorf("error extracting OpenTofu provider schema: %v", err)
 		}

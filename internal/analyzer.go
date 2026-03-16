@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func Run(filePath, tool, model, prompt, addr string) error {
+func Run(filePath, tool, model, prompt, addr string, initBackend bool) error {
 	if !strings.HasSuffix(filePath, ".tf") && !strings.HasSuffix(filePath, ".tofu") {
 		return fmt.Errorf("the provided file must have a .tf or .tofu extension")
 	}
@@ -25,12 +25,12 @@ func Run(filePath, tool, model, prompt, addr string) error {
 
 	switch tool {
 	case "terraform":
-		providerSchema, err = ExtractTerraformProviderSchema(dir)
+		providerSchema, err = ExtractTerraformProviderSchema(dir, initBackend)
 		if err != nil {
 			return fmt.Errorf("error extracting Terraform provider schema: %v", err)
 		}
 	case "opentofu":
-		providerSchema, err = ExtractOpenTofuProviderSchema(dir)
+		providerSchema, err = ExtractOpenTofuProviderSchema(dir, initBackend)
 		if err != nil {
 			return fmt.Errorf("error extracting OpenTofu provider schema: %v", err)
 		}

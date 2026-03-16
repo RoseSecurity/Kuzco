@@ -14,13 +14,17 @@ type ProviderSchema struct {
 	ResourceTypes map[string]map[string]any
 }
 
-func ExtractTerraformProviderSchema(rootDir string) (ProviderSchema, error) {
+func ExtractTerraformProviderSchema(rootDir string, initBackend bool) (ProviderSchema, error) {
 	schema := ProviderSchema{
 		ResourceTypes: make(map[string]map[string]any),
 	}
 
 	// Run terraform init first
-	initCmd := exec.Command("terraform", "init")
+	initArgs := []string{"init"}
+	if !initBackend {
+		initArgs = append(initArgs, "-backend=false")
+	}
+	initCmd := exec.Command("terraform", initArgs...)
 	initCmd.Dir = rootDir
 	var initStderr bytes.Buffer
 	initCmd.Stderr = &initStderr

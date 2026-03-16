@@ -19,7 +19,8 @@ var (
 	model    string
 	prompt   string
 	addr     string
-	dryrun   bool
+	dryrun      bool
+	initBackend bool
 )
 
 var rootCmd = &cobra.Command{
