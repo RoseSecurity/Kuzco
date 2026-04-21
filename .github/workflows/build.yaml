@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: mislav/bump-homebrew-formula-action@v3
+      - uses: mislav/bump-homebrew-formula-action@v3.6
         with:
           # A PR will be sent to github.com/Homebrew/homebrew-core to update this formula:
           formula-name: kuzco
