@@ -7,7 +7,7 @@ toolchain go1.25.7
 require (
 	github.com/arsham/figurine v1.3.0
 	github.com/briandowns/spinner v1.23.2
-	github.com/charmbracelet/glamour v0.10.0
+	github.com/charmbracelet/glamour/v2 v2.0.0
 	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
 	github.com/charmbracelet/lipgloss/v2 v2.0.0-beta.3
 	github.com/fatih/color v1.19.0
